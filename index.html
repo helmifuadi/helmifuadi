@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portofolio Desain - helmifuadi</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f9f9f9;
+      color: #333;
+    }
+    header {
+      text-align: center;
+      padding: 2rem;
+      background: linear-gradient(135deg, #ff4d4d, #ffb84d);
+      color: white;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+    header p {
+      font-size: 1.2rem;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      padding: 2rem;
+    }
+    .gallery img {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #222;
+      color: #fff;
+      margin-top: 2rem;
+    }
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      padding-top: 60px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+    }
+    .lightbox img {
+      display: block;
+      margin: auto;
+      max-width: 90%;
+      max-height: 80vh;
+      border-radius: 8px;
+    }
+    .close, .prev, .next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #fff;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      padding: 10px;
+      user-select: none;
+    }
+    .close {
+      top: 20px;
+      right: 40px;
+      font-size: 50px;
+      transform: none;
+    }
+    .prev { left: 20px; }
+    .next { right: 20px; }
+    .close:hover, .prev:hover, .next:hover {
+      color: #ffb84d;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Portofolio Desain</h1>
+    <p>Infografis, Poster, dan Banner oleh <b>helmifuadi</b></p>
+  </header>
+
+  <section class="gallery">
+    <img src="assets/poster1.jpg" alt="Poster 1">
+    <img src="assets/poster2.jpg" alt="Poster 2">
+    <img src="assets/banner1.jpg" alt="Banner 1">
+    <img src="assets/infografis1.jpg" alt="Infografis 1">
+  </section>
+
+  <div id="lightbox" class="lightbox">
+    <span class="close">&times;</span>
+    <span class="prev">&#10094;</span>
+    <img id="lightbox-img" src="">
+    <span class="next">&#10095;</span>
+  </div>
+
+  <footer>
+    <p>© 2025 helmifuadi | Hubungi: helmispasifuadi@gmail.com</p>
+  </footer>
+
+  <script>
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightbox-img");
+    const closeBtn = document.querySelector(".close");
+    const prevBtn = document.querySelector(".prev");
+    const nextBtn = document.querySelector(".next");
+    const images = document.querySelectorAll(".gallery img");
+    let currentIndex = 0;
+
+    function showImage(index) {
+      lightbox.style.display = "block";
+      lightboxImg.src = images[index].src;
+      currentIndex = index;
+    }
+
+    images.forEach((img, index) => {
+      img.addEventListener("click", () => {
+        showImage(index);
+      });
+    });
+
+    closeBtn.addEventListener("click", () => {
+      lightbox.style.display = "none";
+    });
+
+    prevBtn.addEventListener("click", () => {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      showImage(currentIndex);
+    });
+
+    nextBtn.addEventListener("click", () => {
+      currentIndex = (currentIndex + 1) % images.length;
+      showImage(currentIndex);
+    });
+
+    window.addEventListener("click", (e) => {
+      if (e.target === lightbox) {
+        lightbox.style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>
